@@ -226,7 +226,16 @@ class Entity(object):
         return s.getvalue()
 
     def to_json(self):
+        '''serialize object to json'''
         return json.dumps(self.to_dict())
+
+    def from_json(self, json_doc):
+        '''deserialize object from json'''
+        try:
+            d = json.load(json_doc)
+        except AttributeError: # catch the read() error
+            d = json.loads(json_doc)
+        return self.from_dict(d)
 
     def _get_namespace_def(self, additional_ns_dict=None):
         # copy necessary namespaces
